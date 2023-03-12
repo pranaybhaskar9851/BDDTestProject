@@ -80,3 +80,6 @@ Feature: Product comparision and purchase
       | SALE               |
       | PATTERN            |
       | CLIMATE            |
+
+      ###
+      
