@@ -37,7 +37,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.141.59</version>
+            <version>4.1.1</version>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
@@ -45,6 +45,22 @@
             <version>3.6.0</version>
             <scope>test</scope>
         </dependency>
+					<dependency>
+						<groupId>tech.grasshopper</groupId>
+						<artifactId>cucumber-extent-generator</artifactId>
+						<version>1.0.2</version>
+					</dependency>
+					<dependency>
+						<groupId>com.aventstack</groupId>
+						<artifactId>extentreports</artifactId>
+						<version>3.0.7</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.poi</groupId>
+						<artifactId>poi</artifactId>
+						<version>5.2.3</version>
+					</dependency>
+
     </dependencies>
 
     <build>
@@ -62,25 +78,7 @@
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>net.masterthought</groupId>
-                <artifactId>maven-cucumber-reporting</artifactId>
-                <version>3.8.0</version>
-                <executions>
-                    <execution>
-                        <id>execution</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <projectName>Cucumber Page Object Example</projectName>
-                            <outputDirectory>target/cucumber-reports/advanced-reports</outputDirectory>
-                            <cucumberOutput>target/cucumber-reports/CucumberTestReport.json</cucumberOutput>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            
         </plugins>
     </build>
 </project>
