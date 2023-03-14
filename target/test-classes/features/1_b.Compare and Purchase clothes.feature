@@ -3,14 +3,6 @@ Feature: Product comparision and purchase
   I want to check different clothing options for men
   So that I can compare the product and buy it
 
-  #You added product Proteus Fitness Jackshirt to the comparison list.
-  #Compare Products - add, delete, clear all
-  
-  #
-  #Verify that the user is able to add the product to the cart and proceed to checkout.
-  #Verify that the user is able to purchase the product using a registered account or as a guest user.
-  #Verify that the user is able to view their order history and track the status of their order.
-  #
   Scenario: Verify that the user can view different clothing options for men
     Given user logged in as a registered user on the LUMA shopping site
     When user hover over the "Men" section in the navigation menu
@@ -80,3 +72,78 @@ Feature: Product comparision and purchase
       | SALE               |
       | PATTERN            |
       | CLIMATE            |
+
+  Scenario Outline: User tries to compare different clothing options for men
+    Given user logged in as a registered user on the LUMA shopping site
+    And user navigates to "Men" section in the navigation menu
+    And selects an item "<Menu Item>" under "<Category>" category
+    When user selects a product "<Product Name>" and clicks on "Add to Compare" button then a message "<Message>" should be displayed
+      | Product Name | Message                                              |
+      | <product1>   | You added product <product1> to the comparison list. |
+      | <product2>   | You added product <product2> to the comparison list. |
+      | <product3>   | You added product <product3> to the comparison list. |
+    And user navigates to "Compare Products" page
+    Then user should see a side by side comparison of the three items including their features, prices, and ratings
+
+    Examples: 
+      | Category | Menu Item | product1                  | product2              | product3            |
+      | Tops     | Jackets   | Proteus Fitness Jackshirt | Taurus Elements Shell | Montana Wind Jacket |
+      | Bottoms  | Pants     | Cronus Yoga Pant          | Thorpe Track Pant     | Zeppelin Yoga Pant  |
+
+  Scenario Outline: Verify that the user able to remove an item from the Compare products list
+    Given user logged in as a registered user on the LUMA shopping site
+    And user navigates to "Men" section in the navigation menu
+    And user navigates to "Compare Products" page
+    When user tries to remove a product "<Product Name>" from the comparision list
+    Then a popup should be displaying with the warning message "<Warn Message>"
+    When user clicks on "OK" button on the popup
+    Then user should see a success message saying "<Message Txt>"
+    And the product "<Product Name>" should be removed from the comparision list
+    And user should see a side by side comparison of the other two items
+
+    Examples: 
+      | Product Name              | Warn Message                                                               | Message  Txt                                                            |
+      | Proteus Fitness Jackshirt | Are you sure you want to remove this item from your Compare Products list? | You removed product Proteus Fitness Jackshirt from the comparison list. |
+
+  Scenario Outline: Verify that the user able to clear all items from the comparision list
+    Given user logged in as a registered user on the LUMA shopping site
+    And user navigates to "Men" section in the navigation menu
+    When user clicks on "Clear All" button from the comparision list section
+    Then a popup should be displaying with the warning message "<Warn Message>"
+    When user clicks on "OK" button on the popup
+    Then user should see a success message saying "<Message Txt>"
+    And all the products should be removed from the comparision list
+
+    Examples: 
+      | Warn Message                                                               | Message  Txt                     |
+      | Are you sure you want to remove all items from your Compare Products list? | You cleared the comparison list. |
+
+  Scenario Outline: User tries to buy the product by choosing an item from the comparision list
+    Given user logged in as a registered user on the LUMA shopping site
+    And user navigates to "Men" section in the navigation menu
+    And selects an item "<Menu Item>" under "<Category>" category
+    And user selects a product "<Product Name>" and clicks on "Add to Compare" button then a message "<Message>" should be displayed
+      | Product Name | Message                                              |
+      | <product1>   | You added product <product1> to the comparison list. |
+      | <product2>   | You added product <product2> to the comparison list. |
+      | <product3>   | You added product <product3> to the comparison list. |
+    And user navigates to "Compare Products" page
+    When user compares the products list and chooses an item "<product2>" to purchase it
+    And user clicks on "Add to Cart"
+    Then a message "Message Txt"should be displayed indicating the user to choose the size, color, qunatity etc.
+    When user selects the "size", "color" , "quantity" for the selected item and adds it to the cart
+    And user navigates to cart and clicks on "Proceed to Checkout" option
+    And user enters the "shipping address" and "shipping methods"
+    And user proceeds to Review & Payments page and verifies order summary, billing, shipment details
+    And user enters discount code and clicks on "Apply Discount" button
+    Then Order total should be updated with the discounted price
+    When user proceeds to purchase the item by clicking on "Place Order" button
+    Then an Order should be placed with the order number
+    When user clicks on the order numer
+    Then user should be re-directed to My orders page
+    And all the details of the current order should be displayed to the user
+
+    Examples: 
+      | Category | Menu Item | product1                  | product2              | product3            | Message Txt                               |
+      | Tops     | Jackets   | Proteus Fitness Jackshirt | Taurus Elements Shell | Montana Wind Jacket | You need to choose options for your item. |
+      | Bottoms  | Pants     | Cronus Yoga Pant          | Thorpe Track Pant     | Zeppelin Yoga Pant  | You need to choose options for your item. |

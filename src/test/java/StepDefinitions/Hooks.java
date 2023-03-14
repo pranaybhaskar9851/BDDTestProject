@@ -44,6 +44,7 @@ public class Hooks {
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();
 		driver.get(PropertiesReader.getValue("url"));
+		Thread.sleep(5000);
 		System.out.println("url :"+PropertiesReader.getValue("url"));
 	}
 	

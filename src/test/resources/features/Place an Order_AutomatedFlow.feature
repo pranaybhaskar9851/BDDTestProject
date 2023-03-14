@@ -36,9 +36,9 @@ Feature: Place an order for Men's clothing items
     Then User should see correct information
 
   #Scenario: User places an order and verifies the placed order
-    #Given User is on the order confirmation page
-    #When User clicks on place order button
-    #Then User should see the order has been submitted successfully
-    #Given User is on the my orders page
-    #When User verifies the submitted order
-    #Then User should see the correct order information
+    Given User is on the order confirmation page
+    When User clicks on place order button
+    Then User should see the order has been submitted successfully
+    Given User is on the my orders page
+    When User verifies the submitted order
+    Then User should see the correct order information

@@ -140,54 +140,52 @@ public class CheckoutStepDefinitions {
         checkout.selectShippingMethod();
     }
     @Then("the entered shipping address, selected shipping method should be saved on the Review & Payments page")
-    public void the_entered_shipping_address_selected_shipping_method_should_be_saved_on_the_review_payments_page() {
-        checkout.verifyShippingAddress();
+    public void the_entered_shipping_address_selected_shipping_method_should_be_saved_on_the_review_payments_page() throws IOException {
+        Assert.assertTrue("Shipping address is verified",checkout.verifyShippingAddress());
+    	utils.takeScreenshotAtEndOfTest();
     }
     @Given("User is on the Review & Payments page")
     public void user_is_on_the_review_payments_page() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    	checkout.isPaymentPageDisplayed();
     }
     @When("User verifies the order summary, shipment and billing details")
-    public void user_verifies_the_order_summary_shipment_and_billing_details() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void user_verifies_the_order_summary_shipment_and_billing_details() throws Exception {
+    	checkout.fetchShipmentDetails();
     }
     @Then("User should see correct information")
-    public void user_should_see_correct_information() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void user_should_see_correct_information() throws Exception {
+        Assert.assertTrue("Order summary, shipment & billing address is verified",checkout.validateShipmentDetails());
+     	utils.takeScreenshotAtEndOfTest();
     }
     @Given("User is on the order confirmation page")
     public void user_is_on_the_order_confirmation_page() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    	checkout.isPaymentPageDisplayed();
     }
     @When("User clicks on place order button")
     public void user_clicks_on_place_order_button() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        checkout.clickOnPlaceOrder();
     }
     
     @Then("User should see the order has been submitted successfully")
-    public void user_should_see_the_order_has_been_submitted_successfully() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void user_should_see_the_order_has_been_submitted_successfully() throws IOException {
+        Assert.assertTrue("Order has been created successfully",checkout.verifyOrderConfirmationMsg());
+     	utils.takeScreenshotAtEndOfTest();
     }
     @Given("User is on the my orders page")
-    public void user_is_on_the_my_orders_page() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void user_is_on_the_my_orders_page() throws IOException {
+        checkout.clickOnOrderNumber();
+        Assert.assertTrue("Order has been created successfully",checkout.isMyOrdersPageDisplayed());
+     	utils.takeScreenshotAtEndOfTest();
     }
     @When("User verifies the submitted order")
-    public void user_verifies_the_submitted_order() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void user_verifies_the_submitted_order() throws IOException {
+        checkout.verifySubmittedOrder();
+        utils.takeScreenshotAtEndOfTest();
     }
     @Then("User should see the correct order information")
-    public void user_should_see_the_correct_order_information() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void user_should_see_the_correct_order_information() throws IOException {
+    	checkout.verifySubmittedOrderInfo();
+    	utils.takeScreenshotAtEndOfTest();
     }
 
    

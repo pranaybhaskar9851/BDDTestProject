@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -120,9 +121,66 @@ public class CheckoutPage extends BaseClass {
     @FindBy(xpath = "//button[@type='submit']//span[text()='Next']")
     @CacheLookup
     private WebElement nextButton;
+    
+    @FindBy(xpath = "//div[@class='billing-address-details']")
+    @CacheLookup
+    private WebElement billingAddressDetails;
+    
+    @FindBy(xpath = "//*[text()='Payment Method']")
+    @CacheLookup
+    private WebElement paymentMethodTitle;
 
+    @FindBy(xpath = "//div[@class='ship-to']//div[@class='shipping-information-content']")
+    @CacheLookup
+    private WebElement shipto;
+
+    @FindBy(xpath = "//div[@class='ship-via']//div[@class='shipping-information-content']")
+    @CacheLookup
+    private WebElement shipVia;
+    
+    @FindBy(xpath = "//span[@data-th='Cart Subtotal']")
+    @CacheLookup
+    private WebElement cartSubTotalValue;
+    
+    @FindBy(xpath = "//span[@data-th='Shipping']")
+    @CacheLookup
+    private WebElement shipping;
+
+    @FindBy(xpath = "//button[@title='Place Order']//span/..")
+    @CacheLookup
+    private WebElement placeOrderButton;
+    
+    @FindBy(xpath = "//*[text()='Thank you for your purchase!']")
+    @CacheLookup
+    private WebElement orderConfirmMsg;
    
-
+    @FindBy(xpath = "//a[@class='order-number']/strong")
+    @CacheLookup
+    private WebElement orderNumber;
+  
+    @FindBy(xpath = "//span[contains(text(),'Order #')]")
+    @CacheLookup
+    private WebElement myOrderNumber;
+    
+    @FindBy(xpath = "//div[@class='order-details-items ordered']")
+    @CacheLookup
+    private WebElement submittedOrder;
+    
+    @FindBy(xpath = "//div[@class='block block-order-details-view']")
+    @CacheLookup
+    private WebElement submittedOrderInfo;
+    
+    @FindBy(xpath = "//div[@class='new-address-popup']//button")
+    @CacheLookup
+    private WebElement newAddressButton;
+    
+    @FindBy(xpath = "//span[text()='Ship here']/..")
+    @CacheLookup
+    private WebElement shipHereButton;
+    
+    @FindBy(xpath = "//*[@data-th='Order Total']//span")
+    @CacheLookup
+    private WebElement orderSummaryTotalValue;
     
     public int verifyItemsListAtCart() {
     	System.out.println("entered verifyItemsListAtCart");
@@ -185,7 +243,7 @@ public class CheckoutPage extends BaseClass {
 	public void clickOnProceedToCheckout() {
 		utils.reduceScreenSize("100");
 		WaitUntilElementVisible(proceedToCheckoutButton);
-    	orderTotalValue.isDisplayed();
+		proceedToCheckoutButton.isDisplayed();
     	utils.highlightElement(proceedToCheckoutButton);
     	new Actions(driver).moveToElement(proceedToCheckoutButton).click().build().perform();
     	
@@ -210,14 +268,16 @@ public class CheckoutPage extends BaseClass {
     	WaitUntilElementVisible(orderSummaryExpand);
     	orderSummaryExpand.isDisplayed();
     	utils.highlightElement(orderSummaryExpand);
-    	orderSummaryExpand.click();
+    	//orderSummaryExpand.click();
     	
+    	new Actions(driver).moveToElement(orderSummaryExpand).click().build().perform();
     	return true;
 		
 	}
 
 	List<String> orderSummaryList = new ArrayList<>();
 	public void fetchOrderSummaryDetails() {
+		//new Actions(driver).moveToElement(orderSummaryExpand).click().build().perform();
 		int i =0;
 		for(WebElement e: orderSummaryInfo) {
 			utils.highlightElement(e);
@@ -239,6 +299,15 @@ public class CheckoutPage extends BaseClass {
 
 	public void enterShippingAddress() throws Exception {
 		
+//		if(newAddressButton.isDisplayed())
+//		{
+//			WaitUntilElementVisible(newAddressButton);
+//			newAddressButton.isDisplayed();
+//	    	utils.highlightElement(newAddressButton);
+//	    	newAddressButton.click();
+//		}
+		
+    	
 		WaitUntilElementVisible(street1);
 		street1.isDisplayed();
     	utils.highlightElement(street1);
@@ -273,6 +342,14 @@ public class CheckoutPage extends BaseClass {
     	phoneNumber.isDisplayed();
     	utils.highlightElement(phoneNumber);
     	phoneNumber.sendKeys(PropertiesReader.getValue("phone"));
+    
+//    	if(newAddressButton.isDisplayed()) {
+//	    	WaitUntilElementVisible(shipHereButton);
+//			newAddressButton.isDisplayed();
+//	    	utils.highlightElement(shipHereButton);
+//	    	shipHereButton.click();
+//    	}
+    	
 	}
 
 	public void selectShippingMethod() throws Exception {
@@ -281,29 +358,132 @@ public class CheckoutPage extends BaseClass {
 		shippingMethodRadioButton.isDisplayed();
 		utils.highlightElement(shippingMethodRadioButton);
 		shippingMethodRadioButton.click();
-
+		
+		WaitUntilElementVisible(nextButton);
+		nextButton.isDisplayed();
+		utils.highlightElement(nextButton);
+		nextButton.click();
+		
 	}
 
-	public void verifyShippingAddress() {
-		//div[@class='billing-address-details']
+	public boolean verifyShippingAddress() {
+
+		WaitUntilElementVisible(billingAddressDetails);
+		billingAddressDetails.isDisplayed();
+		utils.highlightElement(billingAddressDetails);
+		return true;
+		
+	}
+	
+	public boolean isPaymentPageDisplayed() {
+		
+		WaitUntilElementVisible(paymentMethodTitle);
+		paymentMethodTitle.isDisplayed();
+    	utils.highlightElement(paymentMethodTitle);
+    	return true;
+		
+	}
+
+	HashMap<String, String> orderSummaryMap = new HashMap<>();
+    
+	public void fetchShipmentDetails() {
+		WaitUntilElementVisible(shipto);
+		shipto.isDisplayed();
+    	utils.highlightElement(shipto);
+    	
+    	WaitUntilElementVisible(shipVia);
+    	shipVia.isDisplayed();
+    	utils.highlightElement(shipVia);
+    	
+    	WaitUntilElementVisible(cartSubTotalValue);
+    	cartSubTotalValue.isDisplayed();
+    	utils.highlightElement(cartSubTotalValue);
+    	orderSummaryMap.put("CartSubTotal", cartSubTotalValue.getText());
+    	
+    	WaitUntilElementVisible(shipping);
+    	shipping.isDisplayed();
+    	utils.highlightElement(shipping);
+    	orderSummaryMap.put("Shipping", shipping.getText());
+    	
+    	
+    	WaitUntilElementVisible(orderSummaryTotalValue);
+    	orderSummaryTotalValue.isDisplayed();
+    	utils.highlightElement(orderSummaryTotalValue);
+    	orderSummaryMap.put("OrderTotalFinal", orderSummaryTotalValue.getText());
+    	
+    	System.out.println("Order summary map: "+orderSummaryMap);
+	}
+	
+	public boolean validateShipmentDetails() throws Exception{
+		boolean matched = true;
+    	for(Entry m : orderSummaryMap.entrySet() ) {
+    		System.out.println("Expected value: "+orderSummaryMap.get(m.getKey()));
+    		System.out.println("Actual value: "+PropertiesReader.getValue(String.valueOf(m.getKey())));
+    		if(!orderSummaryMap.get(m.getKey()).equals(PropertiesReader.getValue(String.valueOf(m.getKey())))) {
+    			matched = false;
+    		}
+    	}
+    	return matched;
+	}
+	
+	public void clickOnPlaceOrder() {
+		WaitUntilElementVisible(placeOrderButton);
+		placeOrderButton.isDisplayed();
+    	utils.highlightElement(placeOrderButton);
+    	new Actions(driver).moveToElement(placeOrderButton).click().build().perform();
+    	
+	}
+
+	String orderNo;
+	public boolean verifyOrderConfirmationMsg() {
+		
+		WaitUntilElementVisible(orderConfirmMsg);
+		orderConfirmMsg.isDisplayed();
+    	utils.highlightElement(orderConfirmMsg);
+    	
+    	WaitUntilElementVisible(orderNumber);
+    	orderNumber.isDisplayed();
+    	utils.highlightElement(orderNumber);
+    	
+    	orderNo = String.valueOf(orderNumber.getText());
+    	System.out.println("Order number is :"+orderNo);
+    	
+    	return true;
 	}
 	
 	
+	public void clickOnOrderNumber() {
+		WaitUntilElementVisible(orderNumber);
+    	orderNumber.isDisplayed();
+    	orderNumber.click();
+	}
+
+	public boolean isMyOrdersPageDisplayed() {
+		WaitUntilElementVisible(myOrderNumber);
+		myOrderNumber.isDisplayed();
+    	utils.highlightElement(myOrderNumber);
+    	if(myOrderNumber.getText().split(" ")[2].equals(orderNo))
+    		return true;
+    	else 
+    		return false;
+	}
+
+	public void verifySubmittedOrder() {
+		WaitUntilElementVisible(submittedOrder);
+		submittedOrder.isDisplayed();
+		new Actions(driver).moveToElement(submittedOrder);
+		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", submittedOrder);    
+		utils.highlightElement(submittedOrder);
+		
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public void verifySubmittedOrderInfo() {
+		WaitUntilElementVisible(submittedOrderInfo);
+		submittedOrderInfo.isDisplayed();
+		new Actions(driver).moveToElement(submittedOrderInfo);
+		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", submittedOrderInfo);    
+		utils.highlightElement(submittedOrderInfo);
+		 
+	}
 	
 }
