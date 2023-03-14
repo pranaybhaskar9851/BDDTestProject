@@ -21,15 +21,9 @@ import org.junit.runner.RunWith;
         glue = "StepDefinitions",
         tags = "@Automated",
         dryRun = false,
-//        format = {
-//                "pretty",
-//                "html:target/cucumber-reports/cucumber-pretty",
-//                "json:target/cucumber-reports/CucumberTestReport.json",
-//                "junit:target/cucumber-reports/CucumberTestReport.xml"
-//        }
-        		plugin = {"html:target/cucumber-html-report.html", "json:target/cucumber-json-report.json" 
-        		//plugin = { "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"
-        		//plugin = { "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+
+         plugin = {"html:target/cucumber-html-report.html", "json:target/cucumber-json-report.json" 
+        		
         		}
 )
 public class TestRunner {

@@ -59,7 +59,6 @@ public class SignInStepDefinitions {
     public void successLogin() {
 
         LUMAHomePage home = new LUMAHomePage(driver, wait);
-       // Assert.assertTrue(home.homePageAfterLoginIsDisplayed());
     }
     
     @When("user clicks on Menu item {string}")

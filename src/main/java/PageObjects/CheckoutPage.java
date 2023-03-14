@@ -299,14 +299,6 @@ public class CheckoutPage extends BaseClass {
 
 	public void enterShippingAddress() throws Exception {
 		
-//		if(newAddressButton.isDisplayed())
-//		{
-//			WaitUntilElementVisible(newAddressButton);
-//			newAddressButton.isDisplayed();
-//	    	utils.highlightElement(newAddressButton);
-//	    	newAddressButton.click();
-//		}
-		
     	
 		WaitUntilElementVisible(street1);
 		street1.isDisplayed();
@@ -342,13 +334,6 @@ public class CheckoutPage extends BaseClass {
     	phoneNumber.isDisplayed();
     	utils.highlightElement(phoneNumber);
     	phoneNumber.sendKeys(PropertiesReader.getValue("phone"));
-    
-//    	if(newAddressButton.isDisplayed()) {
-//	    	WaitUntilElementVisible(shipHereButton);
-//			newAddressButton.isDisplayed();
-//	    	utils.highlightElement(shipHereButton);
-//	    	shipHereButton.click();
-//    	}
     	
 	}
 

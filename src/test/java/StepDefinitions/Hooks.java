@@ -49,12 +49,12 @@ public class Hooks {
 		System.out.println("url :"+PropertiesReader.getValue("url"));
 	}
 	
-	//@After
+	@After
 	public static void takeScreenshotAtEndOfTest() throws IOException {
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		String currentDir = System.getProperty("user.dir");
 		FileUtils.copyFile(scrFile, new File(currentDir + "/screenshots/" + System.currentTimeMillis() + ".png"));
-		//driver.quit();
+		driver.quit();
 	}
 
 }

@@ -27,15 +27,5 @@ public class PropertiesReader {
     	if(reportConfigPath!= null) return reportConfigPath;
     	else throw new RuntimeException("Report Config Path not specified in the Configuration.properties file for the Key:reportConfigPath");		
     }
-    
-//    public String getUserName() throws Exception {
-//         String email = PropertiesReader.getValue("Email");
-//        return email;
-//    }
-//    
-//    public String getPassword() throws Exception {
-//        String password = PropertiesReader.getValue("Password");
-//       return password;
-//   }
 	
 }

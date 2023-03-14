@@ -27,9 +27,7 @@ public abstract class BaseClass {
     
     protected void WaitUntilElementRefreshed(String locator) {
 
-    	//wait.until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfElementLocated(By.xpath(locator))));
     	wait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(By.xpath(locator)));
-    	
 
     }
 	
