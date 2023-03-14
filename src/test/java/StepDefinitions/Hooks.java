@@ -38,6 +38,7 @@ public class Hooks {
 		ChromeOptions options = new ChromeOptions();
 		//options.addArguments("--headless");
 		options.addArguments( "--window-size=1440,768", "--disable-gpu");
+		options.addArguments("--remote-allow-origins=*");
 		driver = new ChromeDriver(options);
 		PropertiesReader propertiesReader = new PropertiesReader();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(propertiesReader.getTimeout()));
